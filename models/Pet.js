@@ -16,6 +16,10 @@ const PetSchema = new mongoose.Schema({
   // TODO: colors
 })
 
+PetSchema.methods.increaseAge = async function () {
+  this.age = this.age + 1
+  await this.save()
+}
 
 const Pet = mongoose.model('Pet', PetSchema)
 
