@@ -28,8 +28,8 @@ app.get('/read', async (req, res) => {
   }
 });
 
-app.get('/latest', async (req, res) => {
-  try {
+// app.get('/latest', async (req, res) => {
+//   try {
     // const pets = await db.collection('pets')
     //   .find()
     //   .limit(3)
@@ -39,18 +39,17 @@ app.get('/latest', async (req, res) => {
     //   .toArray()
 
     // res.json(pets)
-  } catch(err) {
-    res.status(500).json(err)
-  }
-});
+//   } catch(err) {
+//     res.status(500).json(err)
+//   }
+// });
 
 app.put('/update/:id', async (req, res) => {
   try {
-    // const result = await db.collection('pets').updateOne(
-    //   { _id: ObjectId(req.params.id) },
-    //   { $set: req.body }
-    // )
-    // res.json(result)
+    const result = await Pet.findByIdAndUpdate(req.params.id, { 
+      $set: req.body 
+    }, { new: true })
+    res.json(result)
   } catch(err) {
     res.status(500).json(err)
   }
@@ -58,16 +57,12 @@ app.put('/update/:id', async (req, res) => {
 
 app.delete('/delete/:id', async (req, res) => {
   try {
-    // const result = await db.collection('pets').deleteOne({
-    //   _id: ObjectId(req.params.id)
-    // })
-    // res.json(result)
+    const result = await Pet.findByIdAndDelete(req.params.id)
+    res.json(result)
   } catch(err) {
     res.status(500).json(err)
   }
 });
-
-
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
