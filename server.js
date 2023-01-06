@@ -43,6 +43,12 @@ app.delete('/delete/:id', async (req, res) => {
   }
 });
 
+app.put('/increase-age/:id', async (req, res) => {
+  const pet = await Pet.findById(req.params.id)
+  pet.increaseAge()
+  res.json(pet)
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
