@@ -27,11 +27,8 @@ app.get('/read', async (req, res) => {
 
 app.put('/update/:id', async (req, res) => {
   try {
-    // const result = await db.collection('pets').updateOne(
-    //   { _id: ObjectId(req.params.id) },
-    //   { $set: req.body }
-    // )
-    // res.json(result)
+    const result = await Pet.findByIdAndUpdate(req.params.id, req.body, { new: true })
+    res.json(result)
   } catch(err) {
     res.status(500).json(err)
   }
@@ -39,10 +36,8 @@ app.put('/update/:id', async (req, res) => {
 
 app.delete('/delete/:id', async (req, res) => {
   try {
-    // const result = await db.collection('pets').deleteOne({
-    //   _id: ObjectId(req.params.id)
-    // })
-    // res.json(result)
+    const result = await Pet.findByIdAndDelete(req.params.id)
+    res.json(result)
   } catch(err) {
     res.status(500).json(err)
   }
