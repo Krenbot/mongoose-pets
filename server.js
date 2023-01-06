@@ -49,6 +49,26 @@ app.put('/increase-age/:id', async (req, res) => {
   res.json(pet)
 })
 
+app.get('/aggregate-ages', async (req, res) => {
+  try {
+    const results = await Pet.aggregate([
+      { 
+        $group: {
+          _id: "AgesInfo",
+          max: { $max: '$age' },
+          min: { $min: '$age' },
+          sum: { $sum: '$age' },
+          avg: { $avg: '$age' }
+        } 
+      }
+    ])
+    res.json(results)
+  } catch(err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+})
+
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
