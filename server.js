@@ -9,8 +9,8 @@ app.use(express.json());
 
 app.post('/create', async (req, res) => {
   try {
-    // const result = await db.collection('pets').insertOne(req.body)
-    // res.json(result)
+    const result = await Pet.create(req.body)
+    res.json(result)
   } catch(err) {
     res.status(500).json(err)
   }
@@ -47,7 +47,6 @@ app.delete('/delete/:id', async (req, res) => {
     res.status(500).json(err)
   }
 });
-
 
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
