@@ -21,25 +21,13 @@ app.get('/read', async (req, res) => {
     const pets = await Pet.find()
     res.json(pets)
   } catch(err) {
-    console.log(err)
-    res.status(500).json(err)
-  }
-});
-
-app.put('/update/:id', async (req, res) => {
-  try {
-    const result = await Pet.findByIdAndUpdate(req.params.id, { 
-      $set: req.body 
-    }, { new: true })
-    res.json(result)
-  } catch(err) {
     res.status(500).json(err)
   }
 });
 
 app.delete('/delete/:id', async (req, res) => {
   try {
-    const result = await Pet.findByIdAndDelete(req.params.id)
+    const result = await Pet.findByIdAndUpdate(req.params.id, req.body, { new: true })
     res.json(result)
   } catch(err) {
     res.status(500).json(err)
@@ -48,26 +36,34 @@ app.delete('/delete/:id', async (req, res) => {
 
 app.put('/increase-age/:id', async (req, res) => {
   try {
-    let pet = await Pet.findById(req.params.id)
-    pet.increaseAge()
-    pet = await Pet.findById(req.params.id)
-    res.json(pet)
+    const result = await Pet.findByIdAndDelete(req.params.id)
+    res.json(result)
   } catch(err) {
     console.log(err)
     res.status(500).json(err)
   }
 })
 
+app.put('/increase-age/:id', async (req, res) => {
+  const pet = await Pet.findById(req.params.id)
+  pet.increaseAge()
+  res.json(pet)
+})
+
 app.get('/aggregate-ages', async (req, res) => {
   try {
-    const result = await Pet.aggregate([{
-      $group: {
-        _id: 'Ages',
-        min: { $min: '$age'},
-        max: { $max: '$age'}
+    const results = await Pet.aggregate([
+      { 
+        $group: {
+          _id: "AgesInfo",
+          max: { $max: '$age' },
+          min: { $min: '$age' },
+          sum: { $sum: '$age' },
+          avg: { $avg: '$age' }
+        } 
       }
-    }])
-    res.json(result)
+    ])
+    res.json(results)
   } catch(err) {
     console.log(err)
     res.status(500).json(err)
@@ -77,10 +73,3 @@ app.get('/aggregate-ages', async (req, res) => {
 app.listen(port, () => {
   console.log(`Example app listening at http://localhost:${port}`);
 });
-
-
-
-
-
-
-

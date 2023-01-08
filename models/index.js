@@ -1,3 +1,3 @@
-const Pet = require('./Pet')
+const Pet = require('./Pets')
 
 module.exports = { Pet }
