@@ -25,7 +25,7 @@ app.get('/read', async (req, res) => {
   }
 });
 
-app.put('/update/:id', async (req, res) => {
+app.delete('/delete/:id', async (req, res) => {
   try {
     const result = await Pet.findByIdAndUpdate(req.params.id, req.body, { new: true })
     res.json(result)
@@ -34,14 +34,15 @@ app.put('/update/:id', async (req, res) => {
   }
 });
 
-app.delete('/delete/:id', async (req, res) => {
+app.put('/increase-age/:id', async (req, res) => {
   try {
     const result = await Pet.findByIdAndDelete(req.params.id)
     res.json(result)
   } catch(err) {
+    console.log(err)
     res.status(500).json(err)
   }
-});
+})
 
 app.put('/increase-age/:id', async (req, res) => {
   const pet = await Pet.findById(req.params.id)
