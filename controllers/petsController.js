@@ -11,7 +11,10 @@ module.exports = {
   },
   find: async function (req, res) {
     try {
-      const pets = await Pet.find()
+      const pets = await Pet
+        .find()
+        .populate('owner')
+        .populate('colors')
       res.json(pets)
     } catch(err) {
       res.status(500).json(err)

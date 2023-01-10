@@ -11,8 +11,8 @@ module.exports = {
   },
   find: async function (req, res) {
     try {
-      const pets = await Owner.find()
-      res.json(pets)
+      const owners = await Owner.find()
+      res.json(owners)
     } catch(err) {
       res.status(500).json(err)
     }

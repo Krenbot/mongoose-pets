@@ -15,6 +15,13 @@ const OwnerSchema = new mongoose.Schema({
   }
 })
 
+OwnerSchema.methods.createFullname = async function(value) {
+  const [firstName, lastName] = value.split(' ')
+  this.firstName = firstName
+  this.lastName = lastName
+  await this.save()
+}
+
 OwnerSchema.virtual('fullName')
   .get(function() {
     return `${this.firstName} ${this.lastName}`

@@ -13,8 +13,16 @@ const PetSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  // TODO: owner,
-  // TODO: colors,
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Owner'
+  },
+  colors: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'Color'
+    }
+  ],
 })
 
 PetSchema.methods.increaseAge = async function () {
