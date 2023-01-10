@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const petsController = require('../controllers/petsController')
 
-router.post('/create', petsController.create);
+router.post('/', petsController.create);
 
 router.get('/', petsController.find);
 

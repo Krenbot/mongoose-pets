@@ -1,19 +1,5 @@
 const mongoose = require('mongoose')
 
-const OwnerSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  }
-})
-
-const ColorsSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  }
-})
-
 const PetSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -27,8 +13,8 @@ const PetSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  owner: OwnerSchema,
-  colors: [ColorsSchema]
+  // TODO: owner,
+  // TODO: colors,
 })
 
 PetSchema.methods.increaseAge = async function () {
