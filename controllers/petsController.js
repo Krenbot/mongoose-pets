@@ -5,7 +5,7 @@ module.exports = {
     try {
       const result = await Pet.create(req.body)
       res.json(result)
-    } catch(err) {
+    } catch (err) {
       res.status(500).json(err)
     }
   },
@@ -16,7 +16,7 @@ module.exports = {
         .populate('owner')
         .populate('colors')
       res.json(pets)
-    } catch(err) {
+    } catch (err) {
       res.status(500).json(err)
     }
   },
@@ -24,7 +24,7 @@ module.exports = {
     try {
       const result = await Pet.findByIdAndUpdate(req.params.id, req.body, { new: true })
       res.json(result)
-    } catch(err) {
+    } catch (err) {
       res.status(500).json(err)
     }
   },
@@ -32,7 +32,7 @@ module.exports = {
     try {
       const result = await Pet.findByIdAndDelete(req.params.id)
       res.json(result)
-    } catch(err) {
+    } catch (err) {
       res.status(500).json(err)
     }
   },
@@ -44,20 +44,42 @@ module.exports = {
   getAgeInfo: async function (req, res) {
     try {
       const results = await Pet.aggregate([
-        { 
+        {
           $group: {
             _id: "AgesInfo",
             max: { $max: '$age' },
             min: { $min: '$age' },
             sum: { $sum: '$age' },
             avg: { $avg: '$age' }
-          } 
+          }
         }
       ])
       res.json(results)
-    } catch(err) {
+    } catch (err) {
       console.log(err)
       res.status(500).json(err)
     }
   },
+  addcolor: async function (req, res) {
+    const petId = req.params.id
+    const newColor = req.body.color
+
+    const updatedPet = await Pet.findByIdAndUpdate(
+      petId,
+      { $addToSet: { colors: [newColor] } },
+      { new: true }
+    )
+    res.json(updatedPet)
+  },
+  removeColor: async function (req, res) {
+    const petId = req.params.id
+    const colorToRemove = req.body.color
+
+    const updatedPet = await Pet.findByIdAndUpdate(
+      petId,
+      { $pull: { colors: [colorToRemove] } },
+      { new: true }
+    )
+    res.json(updatedPet)
+  }
 }

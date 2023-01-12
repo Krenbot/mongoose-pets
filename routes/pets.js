@@ -7,6 +7,10 @@ router.get('/', petsController.find);
 
 router.put('/update/:id', petsController.update);
 
+router.put('/addColor:id', petsController.addColor)
+
+router.put('/removeColor:id', petsController.removeColor)
+
 router.delete('/delete/:id', petsController.delete);
 
 router.put('/increase-age/:id', petsController.increaseAge)
