@@ -60,7 +60,7 @@ module.exports = {
       res.status(500).json(err)
     }
   },
-  addcolor: async function (req, res) {
+  addColor: async function (req, res) {
     const petId = req.params.id
     const newColor = req.body.color
 
